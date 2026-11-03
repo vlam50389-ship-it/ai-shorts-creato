@@ -2,51 +2,61 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Shorts Creator 3.0</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Shorts Creator 4.0</title>
 <style>
 *{box-sizing:border-box}
-body{margin:0;padding:18px;background:#101827;color:#f1f5f9;font-family:Arial,sans-serif}
-main{max-width:760px;margin:auto}
-h1{font-size:25px;color:#60a5fa}
-h2{font-size:19px;color:#93c5fd;margin-top:28px}
-p{color:#cbd5e1;line-height:1.5}
-.card{background:#1e293b;padding:16px;border-radius:13px;margin:14px 0}
-label{display:block;margin:13px 0 6px;color:#cbd5e1}
+body{margin:0;padding:15px;background:#0f172a;color:#f8fafc;font-family:Arial,sans-serif}
+main{max-width:850px;margin:auto}
+h1{color:#60a5fa;font-size:25px}
+h2{font-size:19px;color:#93c5fd}
+h3{color:#bfdbfe;font-size:17px}
+p{line-height:1.5;color:#cbd5e1}
+.card{background:#1e293b;padding:15px;border-radius:12px;margin:14px 0}
+label{display:block;margin:12px 0 6px;color:#cbd5e1}
 input,select,textarea{width:100%;padding:12px;border:1px solid #475569;border-radius:8px;background:#0f172a;color:white;font-size:16px}
-textarea{min-height:100px;resize:vertical}
-button{border:0;border-radius:8px;padding:12px 15px;margin:7px 4px 0 0;background:#2563eb;color:white;font-size:15px;font-weight:bold}
-button.secondary{background:#475569}
-button.danger{background:#b91c1c}
-button:active{opacity:.8}
-#output{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.55}
-.small{font-size:13px;color:#94a3b8}
+textarea{min-height:85px;resize:vertical}
+button{padding:12px;border:0;border-radius:8px;background:#2563eb;color:white;font-weight:bold;margin:6px 4px 0 0;font-size:14px}
+.secondary{background:#475569}
+.green{background:#047857}
+.red{background:#b91c1c}
+.scene{border:1px solid #475569;padding:13px;border-radius:10px;margin:13px 0;background:#172338}
+.small{font-size:12px;color:#94a3b8}
+.output{white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.5}
+.status{color:#86efac;font-size:13px}
 </style>
 </head>
 <body>
 <main>
-<h1>🎬 AI SHORTS CREATOR 3.0</h1>
-<p>Công cụ tạo câu lệnh, lưu dự án và chuẩn bị sản xuất YouTube Shorts.</p>
+<h1>🎬 AI SHORTS CREATOR 4.0</h1>
+<p>Studio sản xuất YouTube Shorts bằng AI · Tối ưu cho iPhone và CapCut.</p>
 
 <section class="card">
-<h2>1. Tạo dự án video</h2>
+<h2>1. Thiết lập video</h2>
 <label>Tên dự án</label>
-<input id="projectName" value="Caveman Survival Story">
+<input id="project" value="Caveman Survival Story">
+
 <label>Chủ đề</label>
 <input id="topic" value="Prehistoric People">
+
 <label>Ý tưởng câu chuyện</label>
-<textarea id="idea">A caveman tries to save his family from a dangerous predator.</textarea>
-<label>Thời lượng</label>
+<textarea id="idea">A brave caveman risks his life to save his family from a dangerous predator.</textarea>
+
+<label>Thời lượng video</label>
 <select id="duration">
-<option>30 seconds</option><option selected>40 seconds</option><option>60 seconds</option>
+<option value="30">30 giây</option>
+<option value="40" selected>40 giây</option>
+<option value="60">60 giây</option>
 </select>
+
 <label>Phong cách hình ảnh</label>
 <select id="style">
 <option>3D Realistic Cartoon</option>
 <option>3D Cinematic Realism</option>
-<option>Original Pixar-inspired 3D animation</option>
+<option>Original stylized 3D animation</option>
 <option>Stickman Animation</option>
 </select>
+
 <label>Thể loại</label>
 <select id="genre">
 <option>Survival and Adventure</option>
@@ -55,229 +65,382 @@ button:active{opacity:.8}
 <option>Mystery</option>
 <option>Educational</option>
 </select>
+
 <label>Khán giả</label>
 <select id="audience">
-<option>United States and international</option>
 <option>United States</option>
+<option>United States and international</option>
 <option>Worldwide</option>
 </select>
+
 <label>Ngôn ngữ</label>
 <select id="language">
-<option>English with Vietnamese translation</option>
+<option>English narration + Vietnamese translation</option>
 <option>English only</option>
 </select>
-<button onclick="generate()">✨ Tạo câu lệnh AI</button>
-<button class="secondary" onclick="copyPrompt()">📋 Sao chép câu lệnh</button>
 </section>
 
 <section class="card">
-<h2>2. Thư viện nhân vật</h2>
-<p class="small">Mô tả ngoại hình nhân vật để sử dụng nhất quán trong các cảnh.</p>
+<h2>2. Thiết kế nhân vật chính</h2>
 <label>Tên nhân vật</label>
-<input id="characterName" value="Grug">
+<input id="character" value="Grug">
+
 <label>Mô tả ngoại hình</label>
-<textarea id="characterDesc">A prehistoric caveman, muscular build, messy dark brown hair, short beard, rugged animal-skin clothing, expressive face. Keep the same face, hairstyle, clothing and body proportions in every scene.</textarea>
-<button onclick="saveCharacter()">💾 Lưu nhân vật</button>
-<button class="secondary" onclick="loadCharacter()">Tải nhân vật đã lưu</button>
-<p id="characterStatus" class="small"></p>
+<textarea id="appearance">A muscular prehistoric caveman with messy dark brown hair, short beard, rugged animal-skin clothing, expressive face and strong body. Keep exactly the same face, hairstyle, clothing and body proportions in every scene.</textarea>
 </section>
 
 <section class="card">
-<h2>3. Câu lệnh sản xuất</h2>
-<div id="output">Nhấn “Tạo câu lệnh AI” để bắt đầu.</div>
+<h2>3. Tạo storyboard tự động</h2>
+<p class="small">30 giây: 5 cảnh · 40 giây: 6 cảnh · 60 giây: 8 cảnh.</p>
+<button onclick="createScenes()">✨ Tạo storyboard</button>
+<button class="secondary" onclick="makeFullPrompt()">Tạo câu lệnh tổng</button>
+<div id="storyboard"></div>
 </section>
 
 <section class="card">
-<h2>4. Quản lý dự án</h2>
-<button onclick="saveProject()">💾 Lưu dự án hiện tại</button>
-<label>Chọn dự án đã lưu</label>
-<select id="projectList">
-<option value="">Chưa có dự án</option>
-</select>
+<h2>4. Câu lệnh tổng cho AI</h2>
+<div id="fullPrompt" class="output">Nhấn Tạo câu lệnh tổng để tạo nội dung.</div>
+<button onclick="copyFull()">📋 Sao chép câu lệnh tổng</button>
+</section>
+
+<section class="card">
+<h2>5. Lưu và quản lý dự án</h2>
+<button class="green" onclick="saveProject()">💾 Lưu dự án</button>
+<label>Dự án đã lưu</label>
+<select id="savedProjects"></select>
 <button class="secondary" onclick="loadProject()">Mở dự án</button>
-<button class="danger" onclick="deleteProject()">Xóa dự án đang chọn</button>
-<p id="projectStatus" class="small"></p>
+<button class="red" onclick="deleteProject()">Xóa dự án</button>
+<p id="saveStatus" class="status"></p>
 </section>
 
 <section class="card">
-<h2>5. Xuất bộ sản xuất</h2>
-<p>Xuất câu lệnh và thông tin dự án thành file TXT để sử dụng khi dựng video.</p>
-<button onclick="exportTXT()">⬇️ Xuất file TXT</button>
-<button class="secondary" onclick="copyPrompt()">📋 Sao chép nội dung</button>
+<h2>6. Xuất bộ sản xuất video</h2>
+<p>Xuất kịch bản, từng cảnh, prompt ảnh, prompt chuyển động và lời đọc thành file TXT.</p>
+<button class="green" onclick="exportTXT()">⬇️ Xuất bộ sản xuất TXT</button>
+<button class="secondary" onclick="copyAll()">📋 Sao chép toàn bộ</button>
 </section>
 
-<p class="small">AI Shorts Creator 3.0 · Dữ liệu lưu trên trình duyệt của thiết bị này.</p>
+<p class="small">AI Shorts Creator 4.0 · Local project storage · No API key required.</p>
 </main>
 
 <script>
-const $ = id => document.getElementById(id);
-const KEY = "aishorts_v3_projects";
-const CHARKEY = "aishorts_v3_character";
-let currentPrompt = "";
+const $=id=>document.getElementById(id);
+const PROJECT_KEY="aishorts_v4_projects";
+let scenes=[];
 
-function getProjects(){
- try{return JSON.parse(localStorage.getItem(KEY)||"[]")}
- catch(e){return []}
-}
-function getData(){
- return {
-  name:$("projectName").value,
-  topic:$("topic").value,
-  idea:$("idea").value,
-  duration:$("duration").value,
-  style:$("style").value,
-  genre:$("genre").value,
-  audience:$("audience").value,
-  language:$("language").value,
-  characterName:$("characterName").value,
-  characterDesc:$("characterDesc").value,
-  prompt:currentPrompt
- };
-}
-function generate(){
- const d=getData();
- currentPrompt = `You are an expert YouTube Shorts storyteller and AI video production director.
+const hooks=[
+"Have you ever wondered what happens when a caveman faces his greatest fear?",
+"One ordinary day in the Stone Age changed everything.",
+"Grug thought this would be an easy day. He was terribly wrong.",
+"Deep in the prehistoric wilderness, danger was getting closer.",
+"Nobody expected what happened next."
+];
 
-Create a complete ${d.duration} YouTube Shorts production package.
+function getCount(){
+return Number($("duration").value)===30?5:
+Number($("duration").value)===40?6:8;
+}
+
+function makeScene(i,count){
+const duration=Number($("duration").value);
+const length=duration/count;
+const character=$("character").value;
+const appearance=$("appearance").value;
+const idea=$("idea").value;
+const topic=$("topic").value;
+const style=$("style").value;
+
+const roles=[
+"Opening hook: introduce the danger and grab attention immediately.",
+"Establish the setting and show the main character.",
+"Introduce the main problem and build tension.",
+"Escalate the danger with a surprising obstacle.",
+"Show the climax and the character's most important action.",
+"Deliver a satisfying ending and memorable final moment.",
+"Show the consequences and an unexpected twist.",
+"Finish with a powerful final image and emotional payoff."
+];
+
+const role=roles[Math.min(i,roles.length-1)];
+
+return {
+number:i+1,
+time:Math.round(i*length),
+duration:Math.round(length),
+role:role,
+narration:"",
+translation:"",
+image:`Create a ${style} cinematic scene for a prehistoric YouTube Shorts story.
+
+STORY: ${idea}
+TOPIC: ${topic}
+CHARACTER: ${character}
+CHARACTER APPEARANCE: ${appearance}
+
+SCENE ${i+1}: ${role}
+
+Maintain identical character appearance across every scene.
+Detailed prehistoric environment, realistic textures, cinematic lighting, expressive facial emotions, professional composition, vertical 9:16 framing. No text, no watermark.`,
+motion:`Animate scene ${i+1} in ${style} style.
+Action: Show the visual action described in this scene: ${role}
+Character: ${character}. Maintain identical appearance.
+Use natural body movement, realistic environmental physics, cinematic camera movement, smooth motion, vertical 9:16 composition.`,
+camera:"Cinematic medium shot, dynamic camera movement, natural lighting.",
+sound:"Prehistoric forest ambience, footsteps, wind and dramatic cinematic sound effects."
+};
+}
+
+function createScenes(){
+const count=getCount();
+scenes=[];
+for(let i=0;i<count;i++)scenes.push(makeScene(i,count));
+renderScenes();
+$("saveStatus").textContent="Đã tạo "+count+" cảnh. Bạn có thể chỉnh sửa nội dung từng cảnh.";
+}
+
+function renderScenes(){
+const root=$("storyboard");
+root.innerHTML="";
+scenes.forEach((s,index)=>{
+const div=document.createElement("div");
+div.className="scene";
+div.innerHTML=`
+<h3>🎬 Cảnh ${s.number} · ${s.time}s – ${s.time+s.duration}s</h3>
+<p class="small">${s.role} · Thời lượng ${s.duration} giây</p>
+<label>Lời đọc tiếng Anh</label>
+<textarea data-field="narration" data-index="${index}">${s.narration}</textarea>
+<label>Dịch tiếng Việt</label>
+<textarea data-field="translation" data-index="${index}">${s.translation}</textarea>
+<label>Prompt tạo ảnh</label>
+<textarea data-field="image" data-index="${index}">${s.image}</textarea>
+<label>Prompt chuyển động</label>
+<textarea data-field="motion" data-index="${index}">${s.motion}</textarea>
+<label>Góc máy và ánh sáng</label>
+<textarea data-field="camera" data-index="${index}">${s.camera}</textarea>
+<label>Âm thanh</label>
+<textarea data-field="sound" data-index="${index}">${s.sound}</textarea>
+<button onclick="copyScene(${index})">📋 Sao chép cảnh ${s.number}</button>
+`;
+root.appendChild(div);
+});
+}
+
+function readScenes(){
+document.querySelectorAll("[data-field]").forEach(el=>{
+const i=Number(el.dataset.index);
+if(scenes[i])scenes[i][el.dataset.field]=el.value;
+});
+}
+
+function sceneText(s){
+return `SCENE ${s.number}
+TIME: ${s.time}s – ${s.time+s.duration}s
+PURPOSE: ${s.role}
+ENGLISH NARRATION:
+${s.narration}
+VIETNAMESE TRANSLATION:
+${s.translation}
+IMAGE PROMPT:
+${s.image}
+MOTION PROMPT:
+${s.motion}
+CAMERA:
+${s.camera}
+SOUND:
+${s.sound}
+`;
+}
+
+function copyScene(i){
+readScenes();
+copyText(sceneText(scenes[i]));
+}
+
+function makeFullPrompt(){
+const d=getData();
+const count=getCount();
+const prompt=`You are a professional YouTube Shorts screenwriter and AI animation director.
+
+Create a complete ${d.duration}-second video production package.
 
 TOPIC: ${d.topic}
 STORY IDEA: ${d.idea}
-VISUAL STYLE: ${d.style}
-GENRE: ${d.genre}
-TARGET AUDIENCE: ${d.audience}
-LANGUAGE: ${d.language}
-
-MAIN CHARACTER:
-Name: ${d.characterName}
-Appearance: ${d.characterDesc}
-
-IMPORTANT:
-Keep the main character's appearance consistent in every scene.
-Use a strong hook in the first 3 seconds.
-Make the story engaging, visually clear and suitable for YouTube Shorts.
-
-OUTPUT:
-1. Catchy video concept.
-2. Complete English narration with timestamps.
-3. Vietnamese translation when requested.
-4. Character design reference.
-5. Scene-by-scene storyboard with image prompts.
-6. Motion prompts for each scene.
-7. Camera angles, lighting and visual effects.
-8. Sound effects and background music suggestions.
-9. Natural American male storytelling voice direction.
-10. Five clickable English titles.
-11. SEO description, hashtags and keywords.
-12. Thumbnail image prompt.
-13. Step-by-step CapCut editing instructions for iPhone.
-14. Export settings for YouTube Shorts.
-
-Make the production practical for free or free-tier AI tools.`;
- $("output").textContent=currentPrompt;
-}
-function copyPrompt(){
- if(!currentPrompt){generate()}
- const t=currentPrompt;
- if(navigator.clipboard && window.isSecureContext){
-  navigator.clipboard.writeText(t).then(()=>alert("Đã sao chép câu lệnh!"))
-  .catch(()=>fallbackCopy(t));
- }else{fallbackCopy(t)}
-}
-function fallbackCopy(t){
- const area=document.createElement("textarea");
- area.value=t;document.body.appendChild(area);
- area.select();
- try{document.execCommand("copy");alert("Đã sao chép!")}
- catch(e){alert("Hãy nhấn giữ nội dung để sao chép.")}
- area.remove();
-}
-function saveCharacter(){
- const c={
-  name:$("characterName").value,
-  desc:$("characterDesc").value
- };
- localStorage.setItem(CHARKEY,JSON.stringify(c));
- $("characterStatus").textContent="Đã lưu nhân vật trên thiết bị này.";
-}
-function loadCharacter(){
- const c=JSON.parse(localStorage.getItem(CHARKEY)||"null");
- if(!c){$("characterStatus").textContent="Chưa có nhân vật được lưu.";return}
- $("characterName").value=c.name;
- $("characterDesc").value=c.desc;
- $("characterStatus").textContent="Đã tải nhân vật: "+c.name;
-}
-function saveProject(){
- const d=getData();
- if(!d.name.trim()){alert("Hãy nhập tên dự án.");return}
- const list=getProjects();
- const index=list.findIndex(p=>p.name===d.name);
- if(index>=0)list[index]=d;else list.push(d);
- localStorage.setItem(KEY,JSON.stringify(list));
- refreshProjects();
- $("projectList").value=d.name;
- $("projectStatus").textContent="Đã lưu dự án: "+d.name;
-}
-function refreshProjects(){
- const list=getProjects();
- $("projectList").innerHTML="";
- if(!list.length){
-  $("projectList").add(new Option("Chưa có dự án",""));
-  return;
- }
- list.forEach(p=>$("projectList").add(new Option(p.name,p.name)));
-}
-function loadProject(){
- const name=$("projectList").value;
- const p=getProjects().find(x=>x.name===name);
- if(!p)return;
- $("projectName").value=p.name;
- $("topic").value=p.topic;
- $("idea").value=p.idea;
- $("duration").value=p.duration;
- $("style").value=p.style;
- $("genre").value=p.genre;
- $("audience").value=p.audience;
- $("language").value=p.language;
- $("characterName").value=p.characterName||"";
- $("characterDesc").value=p.characterDesc||"";
- currentPrompt=p.prompt||"";
- $("output").textContent=currentPrompt||"Chưa tạo câu lệnh.";
- $("projectStatus").textContent="Đã mở dự án: "+p.name;
-}
-function deleteProject(){
- const name=$("projectList").value;
- if(!name){alert("Hãy chọn dự án cần xóa.");return}
- if(!confirm("Bạn có chắc muốn xóa dự án "+name+"?"))return;
- const list=getProjects().filter(p=>p.name!==name);
- localStorage.setItem(KEY,JSON.stringify(list));
- refreshProjects();
- $("projectStatus").textContent="Đã xóa dự án.";
-}
-function exportTXT(){
- const d=getData();
- const content=`AI SHORTS CREATOR 3.0
-PROJECT: ${d.name}
-
-TOPIC: ${d.topic}
-IDEA: ${d.idea}
-DURATION: ${d.duration}
 STYLE: ${d.style}
 GENRE: ${d.genre}
 AUDIENCE: ${d.audience}
+LANGUAGE: ${d.language}
 
-CHARACTER: ${d.characterName}
-DESCRIPTION: ${d.characterDesc}
+MAIN CHARACTER:
+${d.character}
+${d.appearance}
 
-PRODUCTION PROMPT:
-${currentPrompt||"Chưa tạo câu lệnh. Hãy tạo câu lệnh trước khi xuất file."}`;
- const blob=new Blob([content],{type:"text/plain;charset=utf-8"});
- const url=URL.createObjectURL(blob);
- const a=document.createElement("a");
- a.href=url;
- a.download=(d.name||"AI-Shorts-Project").replace(/[^a-z0-9_-]/gi,"-")+".txt";
- a.click();
- setTimeout(()=>URL.revokeObjectURL(url),1500);
+Create exactly ${count} scenes.
+
+For EVERY scene provide:
+1. Exact timestamp and duration.
+2. English voiceover narration.
+3. Vietnamese translation if requested.
+4. Detailed image-generation prompt.
+5. Detailed image-to-video motion prompt.
+6. Camera angle and lighting.
+7. Sound effects and background ambience.
+
+IMPORTANT:
+- Strong hook in the first 3 seconds.
+- Keep character appearance consistent in every scene.
+- Make the story visually exciting and easy to understand.
+- Use a vertical 9:16 format.
+- Use natural American English narration.
+- Include a strong ending.
+- Do not skip any scene.
+
+Also provide:
+5 English titles, SEO description, hashtags, keywords, thumbnail prompt and a complete iPhone CapCut editing workflow.
+
+Make the package practical for free or free-tier AI tools.`;
+$("fullPrompt").textContent=prompt;
 }
+
+function getData(){
+return {
+project:$("project").value,
+topic:$("topic").value,
+idea:$("idea").value,
+duration:$("duration").value,
+style:$("style").value,
+genre:$("genre").value,
+audience:$("audience").value,
+language:$("language").value,
+character:$("character").value,
+appearance:$("appearance").value
+};
+}
+
+function copyFull(){
+if(!$("fullPrompt").textContent||$("fullPrompt").textContent.startsWith("Nhấn")){
+makeFullPrompt();
+}
+copyText($("fullPrompt").textContent);
+}
+
+function copyAll(){
+readScenes();
+makeFullPrompt();
+copyText(buildExport());
+}
+
+function copyText(value){
+if(navigator.clipboard&&window.isSecureContext){
+navigator.clipboard.writeText(value).then(()=>alert("Đã sao chép thành công!"))
+.catch(()=>fallback(value));
+}else fallback(value);
+}
+
+function fallback(value){
+const t=document.createElement("textarea");
+t.value=value;
+document.body.appendChild(t);
+t.select();
+try{
+document.execCommand("copy");
+alert("Đã sao chép!");
+}catch(e){
+alert("Không thể tự sao chép. Hãy nhấn giữ nội dung để sao chép.");
+}
+t.remove();
+}
+
+function getProjects(){
+try{return JSON.parse(localStorage.getItem(PROJECT_KEY)||"[]")}
+catch(e){return []}
+}
+
+function saveProject(){
+readScenes();
+const d=getData();
+if(!d.project.trim()){alert("Nhập tên dự án trước.");return}
+const list=getProjects();
+const data={...d,scenes:scenes,fullPrompt:$("fullPrompt").textContent};
+const i=list.findIndex(p=>p.project===d.project);
+if(i>=0)list[i]=data;else list.push(data);
+localStorage.setItem(PROJECT_KEY,JSON.stringify(list));
+refreshProjects();
+$("savedProjects").value=d.project;
+$("saveStatus").textContent="Đã lưu dự án thành công!";
+}
+
+function refreshProjects(){
+const list=getProjects();
+$("savedProjects").innerHTML="";
+if(!list.length){
+$("savedProjects").add(new Option("Chưa có dự án",""));
+return;
+}
+list.forEach(p=>$("savedProjects").add(new Option(p.project,p.project)));
+}
+
+function loadProject(){
+const name=$("savedProjects").value;
+const p=getProjects().find(x=>x.project===name);
+if(!p)return;
+Object.keys(p).forEach(k=>{
+if($(k)&&typeof p[k]==="string")$(k).value=p[k];
+});
+scenes=p.scenes||[];
+$("fullPrompt").textContent=p.fullPrompt||"";
+renderScenes();
+$("saveStatus").textContent="Đã mở dự án: "+name;
+}
+
+function deleteProject(){
+const name=$("savedProjects").value;
+if(!name)return;
+if(!confirm("Bạn muốn xóa dự án "+name+"?"))return;
+localStorage.setItem(PROJECT_KEY,JSON.stringify(getProjects().filter(p=>p.project!==name)));
+refreshProjects();
+$("saveStatus").textContent="Đã xóa dự án.";
+}
+
+function buildExport(){
+readScenes();
+const d=getData();
+return `AI SHORTS CREATOR 4.0
+PROJECT: ${d.project}
+TOPIC: ${d.topic}
+IDEA: ${d.idea}
+DURATION: ${d.duration} seconds
+STYLE: ${d.style}
+GENRE: ${d.genre}
+AUDIENCE: ${d.audience}
+LANGUAGE: ${d.language}
+
+MAIN CHARACTER:
+${d.character}
+${d.appearance}
+
+${scenes.map(sceneText).join("\n")}
+
+MASTER AI PROMPT:
+${$("fullPrompt").textContent}`;
+}
+
+function exportTXT(){
+if(!scenes.length){
+alert("Hãy tạo storyboard trước khi xuất file.");
+return;
+}
+const content=buildExport();
+const blob=new Blob(["\ufeff"+content],{type:"text/plain;charset=utf-8"});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");
+a.href=url;
+a.download=(getData().project||"AI-Shorts-Project").replace(/[^a-z0-9_-]/gi,"-")+".txt";
+document.body.appendChild(a);
+a.click();
+a.remove();
+setTimeout(()=>URL.revokeObjectURL(url),2000);
+}
+
 refreshProjects();
 </script>
 </body>

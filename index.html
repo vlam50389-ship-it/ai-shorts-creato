@@ -1,0 +1,187 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Shorts Creator</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101522;color:#f5f7ff;font-family:Arial,sans-serif}
+header{padding:24px 18px;background:#19243a;text-align:center}
+header h1{margin:0;color:#65c9ff;font-size:25px}
+header p{color:#b8c5d8;font-size:13px}
+main{max-width:760px;margin:auto;padding:16px}
+.card{background:#1b2639;padding:17px;border-radius:13px;margin-bottom:15px}
+label{display:block;margin:12px 0 6px;font-size:14px;color:#c7d6e9}
+input,select,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #46546a;background:#101a2b;color:white;font-size:15px}
+button{border:0;border-radius:9px;padding:13px 15px;font-size:14px;font-weight:bold;cursor:pointer}
+.primary{background:#168ce0;color:white;width:100%;margin-top:17px}
+.secondary{background:#31445f;color:white;margin:5px 3px 5px 0}
+h2{font-size:17px;color:#69caff}
+h3{font-size:15px;color:#a9dfff}
+.output{white-space:pre-wrap;line-height:1.6;color:#e0e8f5;font-size:14px;overflow-wrap:anywhere}
+.small{font-size:12px;color:#aebbd0}
+footer{text-align:center;color:#8292a8;padding:20px;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+<h1>🎬 AI SHORTS CREATOR</h1>
+<p>Your AI assistant for YouTube Shorts</p>
+</header>
+<main>
+<div class="card">
+<h2>⚙️ Cài đặt video</h2>
+<label>Chủ đề video</label>
+<input id="topic" value="Prehistoric People" placeholder="Nhập chủ đề">
+<label>Thời lượng</label>
+<select id="duration">
+<option value="30">30 giây</option>
+<option value="40" selected>40 giây</option>
+<option value="60">60 giây</option>
+</select>
+<label>Phong cách hình ảnh</label>
+<select id="style">
+<option>3D Realistic Cartoon</option>
+<option>3D Cinematic Realism</option>
+<option>Stickman Animation</option>
+<option>Funny Cartoon</option>
+</select>
+<label>Ngôn ngữ lời thoại</label>
+<select id="language">
+<option value="English + Vietnamese">English + Vietnamese</option>
+<option value="English">English</option>
+</select>
+<button class="primary" onclick="generate()">✨ TẠO NỘI DUNG VIDEO</button>
+</div>
+
+<div class="card" id="result" style="display:none">
+<h2>📋 Kết quả sản xuất</h2>
+<div style="display:flex;flex-wrap:wrap;gap:5px">
+<button class="secondary" onclick="copyAll()">📋 Sao chép tất cả</button>
+<button class="secondary" onclick="downloadText()">⬇️ Tải TXT</button>
+</div>
+<div id="output" class="output"></div>
+</div>
+<div class="card">
+<h2>📌 Hướng dẫn sử dụng</h2>
+<p class="small">1. Chọn chủ đề và thời lượng.</p>
+<p class="small">2. Nhấn TẠO NỘI DUNG VIDEO.</p>
+<p class="small">3. Sao chép prompt để tạo ảnh và video bằng công cụ AI.</p>
+<p class="small">4. Dùng CapCut để ghép cảnh, giọng đọc và âm thanh.</p>
+</div>
+</main>
+<footer>AI Shorts Creator · Version 1.0 · Free</footer>
+
+<script>
+let finalText="";
+
+const scenes=[
+{
+name:"THE MYSTERY",
+en:"Long ago, life was very different. Imagine waking up in a world without electricity, supermarkets, or modern technology.",
+vi:"Ngày xưa, cuộc sống rất khác biệt. Hãy tưởng tượng bạn thức dậy trong một thế giới không có điện, siêu thị hay công nghệ hiện đại.",
+image:"A prehistoric human waking up inside a rocky cave at sunrise, ancient stone tools, cinematic 3D realistic cartoon, detailed environment, vertical 9:16.",
+motion:"Slow cinematic camera push toward the cave, the prehistoric human slowly opens his eyes, warm sunrise light moves across the cave."
+},
+{
+name:"THE DAILY STRUGGLE",
+en:"Every morning, finding food was a dangerous mission. One mistake could mean going hungry for the entire day.",
+vi:"Mỗi buổi sáng, tìm thức ăn là một nhiệm vụ nguy hiểm. Chỉ một sai lầm cũng có thể khiến họ đói cả ngày.",
+image:"A prehistoric hunter searching for food in a vast ancient forest, wild plants, dramatic natural lighting, cinematic 3D realistic cartoon, vertical 9:16.",
+motion:"The hunter carefully walks through the forest, looks around and searches for food, leaves move in the wind."
+},
+{
+name:"A DANGEROUS ENCOUNTER",
+en:"Suddenly, a huge wild animal appears. The hunter must stay calm and find a way to survive.",
+vi:"Bất ngờ, một con thú hoang khổng lồ xuất hiện. Người thợ săn phải bình tĩnh tìm cách sống sót.",
+image:"A prehistoric hunter facing a giant saber-toothed cat in an ancient forest, dramatic cinematic scene, 3D realistic cartoon, vertical 9:16.",
+motion:"The wild animal steps forward and roars, the hunter slowly steps backward, dramatic camera movement."
+},
+{
+name:"THE SURPRISE",
+en:"Instead of fighting, the hunter uses his intelligence. He escapes and returns safely to his family.",
+vi:"Thay vì chiến đấu, người thợ săn sử dụng trí thông minh. Anh trốn thoát và trở về an toàn với gia đình.",
+image:"A prehistoric hunter returning to a warm cave where his family waits, emotional cinematic lighting, 3D realistic cartoon, vertical 9:16.",
+motion:"The hunter approaches the cave, his family runs toward him, warm emotional camera movement."
+},
+{
+name:"THE LESSON",
+en:"Life was never easy for prehistoric humans. But their courage and intelligence helped humanity survive.",
+vi:"Cuộc sống của người tiền sử chưa bao giờ dễ dàng. Nhưng lòng dũng cảm và trí thông minh đã giúp loài người tồn tại.",
+image:"A prehistoric family standing together in front of a beautiful ancient landscape at sunset, epic cinematic 3D cartoon, vertical 9:16.",
+motion:"Camera slowly pulls back, the family looks toward the sunset, cinematic ending."
+}
+];
+
+function generate(){
+const topic=document.getElementById("topic").value.trim()||"Prehistoric People";
+const duration=Number(document.getElementById("duration").value);
+const style=document.getElementById("style").value;
+const language=document.getElementById("language").value;
+const count=duration===30?3:duration===40?4:5;
+const selected=scenes.slice(0,count);
+let result="AI SHORTS CREATOR\n";
+result+="TOPIC: "+topic+"\nDURATION: "+duration+" seconds\nSTYLE: "+style+"\n\n";
+result+="==============================\nSCRIPT & SCENES\n";
+let allEn="",allVi="";
+selected.forEach((s,i)=>{
+result+="\nSCENE "+(i+1)+" - "+s.name+"\n";
+result+="ENGLISH VOICEOVER:\n"+s.en+"\n\n";
+if(language==="English + Vietnamese")
+result+="VIETNAMESE TRANSLATION:\n"+s.vi+"\n\n";
+result+="IMAGE PROMPT:\n"+s.image.replaceAll("3D realistic cartoon",style)+"\n\n";
+result+="MOTION PROMPT:\n"+s.motion+"\n";
+allEn+=s.en+" ";
+allVi+=s.vi+" ";
+});
+result+="\n==============================\nVOICE & SOUND\n";
+result+="Voice: American male storyteller, natural conversational English, expressive narration.\n";
+result+="Music: Cinematic prehistoric adventure background music.\n";
+result+="SFX: Wind, footsteps, forest ambience, animal roar.\n";
+result+="\n==============================\nYOUTUBE SEO\n";
+result+="TITLE: What Was Life REALLY Like for Prehistoric Humans? 😱\n";
+result+="DESCRIPTION: Discover the challenges of prehistoric life in this cinematic animated short!\n";
+result+="HASHTAGS: #Prehistoric #Cavemen #HumanHistory #Shorts #AncientHistory\n";
+result+="KEYWORDS: prehistoric humans, caveman life, stone age, ancient humans, prehistoric survival, human evolution\n";
+result+="\n==============================\nCAPCUT EDITING\n";
+result+="1. Create a 9:16 project.\n";
+result+="2. Add each scene image or video.\n";
+result+="3. Add English voiceover.\n";
+result+="4. Add background music and sound effects.\n";
+result+="5. Add English subtitles.\n";
+result+="6. Export at 1080x1920, 30 FPS.\n";
+finalText=result;
+document.getElementById("output").textContent=result;
+document.getElementById("result").style.display="block";
+document.getElementById("result").scrollIntoView({behavior:"smooth"});
+}
+
+function copyAll(){
+if(!finalText)return;
+if(navigator.clipboard){
+navigator.clipboard.writeText(finalText).then(()=>alert("Đã sao chép nội dung!")).catch(()=>fallbackCopy());
+}else fallbackCopy();
+}
+function fallbackCopy(){
+const t=document.createElement("textarea");
+t.value=finalText;
+document.body.appendChild(t);
+t.select();
+document.execCommand("copy");
+t.remove();
+alert("Đã sao chép nội dung!");
+}
+function downloadText(){
+if(!finalText)return;
+const blob=new Blob([finalText],{type:"text/plain;charset=utf-8"});
+const url=URL.createObjectURL(blob);
+const a=document.createElement("a");
+a.href=url;a.download="AI-Shorts-Content.txt";
+a.click();
+URL.revokeObjectURL(url);
+}
+</script>
+</body>
+</html>

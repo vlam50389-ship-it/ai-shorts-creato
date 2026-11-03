@@ -3,184 +3,230 @@
 <html lang="vi">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AI Shorts Creator</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AI Shorts Creator 2.0</title>
 <style>
 *{box-sizing:border-box}
 body{margin:0;background:#101522;color:#f5f7ff;font-family:Arial,sans-serif}
-header{padding:24px 18px;background:#19243a;text-align:center}
-header h1{margin:0;color:#65c9ff;font-size:25px}
+header{text-align:center;padding:25px 15px;background:#19243a}
+header h1{color:#65c9ff;margin:0;font-size:25px}
 header p{color:#b8c5d8;font-size:13px}
-main{max-width:760px;margin:auto;padding:16px}
+main{max-width:760px;margin:auto;padding:15px}
 .card{background:#1b2639;padding:17px;border-radius:13px;margin-bottom:15px}
-label{display:block;margin:12px 0 6px;font-size:14px;color:#c7d6e9}
+h2{font-size:18px;color:#69caff}
+label{display:block;margin:13px 0 6px;font-size:14px;color:#c7d6e9}
 input,select,textarea{width:100%;padding:12px;border-radius:8px;border:1px solid #46546a;background:#101a2b;color:white;font-size:15px}
-button{border:0;border-radius:9px;padding:13px 15px;font-size:14px;font-weight:bold;cursor:pointer}
+textarea{min-height:110px;resize:vertical}
+button{border:0;border-radius:9px;padding:13px;font-weight:bold;cursor:pointer}
 .primary{background:#168ce0;color:white;width:100%;margin-top:17px}
 .secondary{background:#31445f;color:white;margin:5px 3px 5px 0}
-h2{font-size:17px;color:#69caff}
-h3{font-size:15px;color:#a9dfff}
-.output{white-space:pre-wrap;line-height:1.6;color:#e0e8f5;font-size:14px;overflow-wrap:anywhere}
-.small{font-size:12px;color:#aebbd0}
+.output{white-space:pre-wrap;line-height:1.65;color:#e0e8f5;font-size:14px;overflow-wrap:anywhere}
+.small{font-size:12px;color:#aebbd0;line-height:1.5}
+.tag{display:inline-block;background:#263d58;color:#9ddaff;padding:6px 9px;border-radius:20px;font-size:12px;margin:3px}
 footer{text-align:center;color:#8292a8;padding:20px;font-size:12px}
 </style>
 </head>
 <body>
 <header>
-<h1>🎬 AI SHORTS CREATOR</h1>
-<p>Your AI assistant for YouTube Shorts</p>
+<h1>🎬 AI SHORTS CREATOR 2.0</h1>
+<p>AI Story • Storyboard • Image Prompts • YouTube SEO</p>
+<span class="tag">FREE WORKFLOW</span>
+<span class="tag">US AUDIENCE</span>
 </header>
 <main>
 <div class="card">
-<h2>⚙️ Cài đặt video</h2>
+<h2>⚙️ 1. THIẾT LẬP VIDEO</h2>
 <label>Chủ đề video</label>
-<input id="topic" value="Prehistoric People" placeholder="Nhập chủ đề">
+<input id="topic" value="Prehistoric People" placeholder="Ví dụ: Caveman survival">
+
+<label>Ý tưởng hoặc nội dung muốn kể</label>
+<textarea id="idea" placeholder="Ví dụ: Một người tiền sử phải tìm thức ăn để cứu gia đình..."></textarea>
+
 <label>Thời lượng</label>
 <select id="duration">
 <option value="30">30 giây</option>
 <option value="40" selected>40 giây</option>
 <option value="60">60 giây</option>
 </select>
+
 <label>Phong cách hình ảnh</label>
 <select id="style">
 <option>3D Realistic Cartoon</option>
 <option>3D Cinematic Realism</option>
+<option>Pixar-inspired original 3D animation</option>
 <option>Stickman Animation</option>
-<option>Funny Cartoon</option>
 </select>
-<label>Ngôn ngữ lời thoại</label>
+
+<label>Thể loại câu chuyện</label>
+<select id="genre">
+<option>Survival and Adventure</option>
+<option>Funny and Unexpected Ending</option>
+<option>Emotional and Inspirational</option>
+<option>Mystery and Suspense</option>
+<option>Educational History</option>
+</select>
+
+<label>Khán giả</label>
+<select id="audience">
+<option>United States and International</option>
+<option>United States</option>
+<option>Worldwide</option>
+</select>
+
+<label>Ngôn ngữ</label>
 <select id="language">
-<option value="English + Vietnamese">English + Vietnamese</option>
-<option value="English">English</option>
+<option>English voiceover + Vietnamese translation</option>
+<option>English only</option>
 </select>
-<button class="primary" onclick="generate()">✨ TẠO NỘI DUNG VIDEO</button>
+
+<button class="primary" onclick="generate()">✨ TẠO CÂU LỆNH AI</button>
 </div>
 
 <div class="card" id="result" style="display:none">
-<h2>📋 Kết quả sản xuất</h2>
-<div style="display:flex;flex-wrap:wrap;gap:5px">
-<button class="secondary" onclick="copyAll()">📋 Sao chép tất cả</button>
-<button class="secondary" onclick="downloadText()">⬇️ Tải TXT</button>
+<h2>🤖 2. CÂU LỆNH DÀNH CHO CHATGPT</h2>
+<p class="small">Sao chép câu lệnh bên dưới, gửi vào ChatGPT để tạo kịch bản và bộ nội dung sản xuất riêng.</p>
+<div id="prompt" class="output"></div>
+<button class="primary" onclick="copyPrompt()">📋 SAO CHÉP CÂU LỆNH AI</button>
 </div>
-<div id="output" class="output"></div>
+
+<div class="card" id="guide" style="display:none">
+<h2>🎥 3. QUY TRÌNH SẢN XUẤT</h2>
+<div class="output" id="workflow"></div>
+<button class="secondary" onclick="copyWorkflow()">📋 Sao chép quy trình</button>
 </div>
+
 <div class="card">
-<h2>📌 Hướng dẫn sử dụng</h2>
-<p class="small">1. Chọn chủ đề và thời lượng.</p>
-<p class="small">2. Nhấn TẠO NỘI DUNG VIDEO.</p>
-<p class="small">3. Sao chép prompt để tạo ảnh và video bằng công cụ AI.</p>
-<p class="small">4. Dùng CapCut để ghép cảnh, giọng đọc và âm thanh.</p>
+<h2>📚 4. HƯỚNG DẪN</h2>
+<p class="small">① Chọn chủ đề và phong cách.</p>
+<p class="small">② Nhấn Tạo câu lệnh AI.</p>
+<p class="small">③ Sao chép câu lệnh và gửi vào ChatGPT.</p>
+<p class="small">④ Nhận kịch bản, prompt ảnh và chuyển động.</p>
+<p class="small">⑤ Dùng công cụ AI tạo hình ảnh/video và dựng bằng CapCut.</p>
 </div>
 </main>
-<footer>AI Shorts Creator · Version 1.0 · Free</footer>
+<footer>AI Shorts Creator 2.0 · Built for YouTube Shorts</footer>
 
 <script>
-let finalText="";
-
-const scenes=[
-{
-name:"THE MYSTERY",
-en:"Long ago, life was very different. Imagine waking up in a world without electricity, supermarkets, or modern technology.",
-vi:"Ngày xưa, cuộc sống rất khác biệt. Hãy tưởng tượng bạn thức dậy trong một thế giới không có điện, siêu thị hay công nghệ hiện đại.",
-image:"A prehistoric human waking up inside a rocky cave at sunrise, ancient stone tools, cinematic 3D realistic cartoon, detailed environment, vertical 9:16.",
-motion:"Slow cinematic camera push toward the cave, the prehistoric human slowly opens his eyes, warm sunrise light moves across the cave."
-},
-{
-name:"THE DAILY STRUGGLE",
-en:"Every morning, finding food was a dangerous mission. One mistake could mean going hungry for the entire day.",
-vi:"Mỗi buổi sáng, tìm thức ăn là một nhiệm vụ nguy hiểm. Chỉ một sai lầm cũng có thể khiến họ đói cả ngày.",
-image:"A prehistoric hunter searching for food in a vast ancient forest, wild plants, dramatic natural lighting, cinematic 3D realistic cartoon, vertical 9:16.",
-motion:"The hunter carefully walks through the forest, looks around and searches for food, leaves move in the wind."
-},
-{
-name:"A DANGEROUS ENCOUNTER",
-en:"Suddenly, a huge wild animal appears. The hunter must stay calm and find a way to survive.",
-vi:"Bất ngờ, một con thú hoang khổng lồ xuất hiện. Người thợ săn phải bình tĩnh tìm cách sống sót.",
-image:"A prehistoric hunter facing a giant saber-toothed cat in an ancient forest, dramatic cinematic scene, 3D realistic cartoon, vertical 9:16.",
-motion:"The wild animal steps forward and roars, the hunter slowly steps backward, dramatic camera movement."
-},
-{
-name:"THE SURPRISE",
-en:"Instead of fighting, the hunter uses his intelligence. He escapes and returns safely to his family.",
-vi:"Thay vì chiến đấu, người thợ săn sử dụng trí thông minh. Anh trốn thoát và trở về an toàn với gia đình.",
-image:"A prehistoric hunter returning to a warm cave where his family waits, emotional cinematic lighting, 3D realistic cartoon, vertical 9:16.",
-motion:"The hunter approaches the cave, his family runs toward him, warm emotional camera movement."
-},
-{
-name:"THE LESSON",
-en:"Life was never easy for prehistoric humans. But their courage and intelligence helped humanity survive.",
-vi:"Cuộc sống của người tiền sử chưa bao giờ dễ dàng. Nhưng lòng dũng cảm và trí thông minh đã giúp loài người tồn tại.",
-image:"A prehistoric family standing together in front of a beautiful ancient landscape at sunset, epic cinematic 3D cartoon, vertical 9:16.",
-motion:"Camera slowly pulls back, the family looks toward the sunset, cinematic ending."
-}
-];
+let promptText="",workflowText="";
 
 function generate(){
 const topic=document.getElementById("topic").value.trim()||"Prehistoric People";
-const duration=Number(document.getElementById("duration").value);
+const idea=document.getElementById("idea").value.trim()||"Create a surprising and engaging story about this topic.";
+const duration=document.getElementById("duration").value;
 const style=document.getElementById("style").value;
+const genre=document.getElementById("genre").value;
+const audience=document.getElementById("audience").value;
 const language=document.getElementById("language").value;
-const count=duration===30?3:duration===40?4:5;
-const selected=scenes.slice(0,count);
-let result="AI SHORTS CREATOR\n";
-result+="TOPIC: "+topic+"\nDURATION: "+duration+" seconds\nSTYLE: "+style+"\n\n";
-result+="==============================\nSCRIPT & SCENES\n";
-let allEn="",allVi="";
-selected.forEach((s,i)=>{
-result+="\nSCENE "+(i+1)+" - "+s.name+"\n";
-result+="ENGLISH VOICEOVER:\n"+s.en+"\n\n";
-if(language==="English + Vietnamese")
-result+="VIETNAMESE TRANSLATION:\n"+s.vi+"\n\n";
-result+="IMAGE PROMPT:\n"+s.image.replaceAll("3D realistic cartoon",style)+"\n\n";
-result+="MOTION PROMPT:\n"+s.motion+"\n";
-allEn+=s.en+" ";
-allVi+=s.vi+" ";
-});
-result+="\n==============================\nVOICE & SOUND\n";
-result+="Voice: American male storyteller, natural conversational English, expressive narration.\n";
-result+="Music: Cinematic prehistoric adventure background music.\n";
-result+="SFX: Wind, footsteps, forest ambience, animal roar.\n";
-result+="\n==============================\nYOUTUBE SEO\n";
-result+="TITLE: What Was Life REALLY Like for Prehistoric Humans? 😱\n";
-result+="DESCRIPTION: Discover the challenges of prehistoric life in this cinematic animated short!\n";
-result+="HASHTAGS: #Prehistoric #Cavemen #HumanHistory #Shorts #AncientHistory\n";
-result+="KEYWORDS: prehistoric humans, caveman life, stone age, ancient humans, prehistoric survival, human evolution\n";
-result+="\n==============================\nCAPCUT EDITING\n";
-result+="1. Create a 9:16 project.\n";
-result+="2. Add each scene image or video.\n";
-result+="3. Add English voiceover.\n";
-result+="4. Add background music and sound effects.\n";
-result+="5. Add English subtitles.\n";
-result+="6. Export at 1080x1920, 30 FPS.\n";
-finalText=result;
-document.getElementById("output").textContent=result;
+const scenes=duration==="30"?5:duration==="40"?6:8;
+
+promptText=`You are an expert YouTube Shorts scriptwriter, storyteller and AI video production director.
+
+PROJECT:
+Topic: ${topic}
+Story idea: ${idea}
+Duration: ${duration} seconds
+Target audience: ${audience}
+Visual style: ${style}
+Story genre: ${genre}
+Language: ${language}
+
+CREATE A COMPLETE YOUTUBE SHORTS PRODUCTION PACKAGE.
+
+IMPORTANT REQUIREMENTS:
+1. Create an original, engaging story with a powerful first 3-second hook.
+2. Make the story suitable for the selected duration.
+3. Divide the story into exactly ${scenes} scenes.
+4. Keep the main character's appearance consistent in every scene.
+5. Use natural, engaging American English narration.
+6. Make the ending surprising, emotional or memorable.
+7. Avoid misleading historical claims. Clearly distinguish dramatization from established facts when appropriate.
+8. Use vertical 9:16 composition.
+
+OUTPUT FORMAT:
+
+PART 1 - VIDEO CONCEPT
+Give a catchy concept and explain the story in 2 sentences.
+
+PART 2 - ENGLISH SCRIPT
+Write the complete voiceover with timestamps.
+Keep the narration appropriate for ${duration} seconds.
+
+PART 3 - VIETNAMESE TRANSLATION
+Translate every narration section naturally.
+
+PART 4 - CHARACTER DESIGN
+Describe the main character's face, body, clothing, age appearance and distinctive features. Keep the design consistent.
+
+PART 5 - STORYBOARD
+Create exactly ${scenes} scenes. For each scene provide:
+- Timestamp and duration
+- Scene action
+- English voiceover
+- Vietnamese translation
+- Detailed AI image prompt in ${style}
+- Detailed image-to-video motion prompt
+- Camera angle and movement
+- Lighting and environment
+- Sound effects
+
+PART 6 - VOICE AND SOUND
+Recommend an American male storyteller voice, narration speed, emotion, background music and sound effects.
+
+PART 7 - YOUTUBE SEO
+Create 5 clickable English titles, a description, 10 relevant hashtags and 15 search keywords for the target audience.
+
+PART 8 - THUMBNAIL
+Write one detailed 9:16 cover image prompt and one short English thumbnail text.
+
+PART 9 - CAPCUT EDITING
+Give a practical step-by-step editing plan on an iPhone, including subtitles, transitions, sound mixing and export settings.
+
+Make the output organized, practical and ready for AI video production.`;
+
+workflowText=`AI SHORTS CREATOR 2.0 - PRODUCTION WORKFLOW
+
+1. Copy the AI prompt from this application.
+2. Send it to ChatGPT.
+3. Receive the full script and storyboard.
+4. Generate images using the image prompts.
+5. Animate the images using motion prompts.
+6. Generate American English narration.
+7. Import images, clips, narration and music into CapCut.
+8. Add English subtitles.
+9. Export vertical 1080 x 1920 video at 30 FPS.
+10. Upload to YouTube Shorts and review performance.
+
+IMPORTANT:
+Check image consistency, narration timing and copyright of music and sound effects before publishing.`;
+
+document.getElementById("prompt").textContent=promptText;
+document.getElementById("workflow").textContent=workflowText;
 document.getElementById("result").style.display="block";
+document.getElementById("guide").style.display="block";
 document.getElementById("result").scrollIntoView({behavior:"smooth"});
 }
 
-function copyAll(){
-if(!finalText)return;
-if(navigator.clipboard){
-navigator.clipboard.writeText(finalText).then(()=>alert("Đã sao chép nội dung!")).catch(()=>fallbackCopy());
-}else fallbackCopy();
+function copyPrompt(){
+copyText(promptText);
 }
-function fallbackCopy(){
+function copyWorkflow(){
+copyText(workflowText);
+}
+function copyText(value){
+if(navigator.clipboard){
+navigator.clipboard.writeText(value)
+.then(()=>alert("Đã sao chép thành công!"))
+.catch(()=>fallback(value));
+}else fallback(value);
+}
+function fallback(value){
 const t=document.createElement("textarea");
-t.value=finalText;
+t.value=value;
 document.body.appendChild(t);
 t.select();
 document.execCommand("copy");
 t.remove();
-alert("Đã sao chép nội dung!");
-}
-function downloadText(){
-if(!finalText)return;
-const blob=new Blob([finalText],{type:"text/plain;charset=utf-8"});
-const url=URL.createObjectURL(blob);
-const a=document.createElement("a");
-a.href=url;a.download="AI-Shorts-Content.txt";
-a.click();
-URL.revokeObjectURL(url);
+alert("Đã sao chép!");
 }
 </script>
 </body>
